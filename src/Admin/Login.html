@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - ESI Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/CSS/Login.css" />
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2980b9;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --success: #2ecc71;
+            --google: #DB4437;
+            --facebook: #4267B2;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-container {
+            width: 380px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+        .login-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .login-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .login-header img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+        .login-body {
+            padding: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .remember-me input {
+            margin-right: 10px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+        .login-btn:hover {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            transform: translateY(-2px);
+        }
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 15px;
+        }
+        .social-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .google-btn {
+            background-color: var(--google);
+        }
+        .facebook-btn {
+            background-color: var(--facebook);
+        }
+        .social-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #777;
+            font-size: 14px;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        .divider::before {
+            margin-right: 10px;
+        }
+        .divider::after {
+            margin-left: 10px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 13px;
+        }
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiwyTDE2LDZIMTlBMiwyIDAgMCwxIDIxLDhWMjBBMiwyIDAgMCwxIDE5LDIySDVBMywzIDAgMCwxIDIsMTlWNUgzQTIuNSwyLjUgMCAwLDEgMC41LDcuNVYxN0EyLjUsMi41IDAgMCwwIDMsMTkuNUgxOUExLjUsMS41IDAgMCwxIDIwLjUsMThWOC41QTEuNSwxLjUgMCAwLDAgMTksN0gxNkwxMiwyWiIvPjwvc3ZnPg==" alt="ESI Logo">
+            <h1>Espace Admin</h1>
+        </div>
+        <div class="login-body">
+            <form id="login-form" autocomplete="off">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="admin@123" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="········" required>
+                </div>
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Se souvenir de moi</label>
+                </div>
+                <button type="submit" class="login-btn">Se Connecter</button>
+                <div class="footer-links">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+                <div class="divider">ou</div>
+                <div class="social-login">
+                    <button type="button" class="social-btn google-btn">
+                        <i class="fab fa-google"></i> Se Connecter avec Google
+                    </button>
+                    <button type="button" class="social-btn facebook-btn">
+                        <i class="fab fa-facebook-f"></i> Se Connecter avec Facebook
+                    </button>
+                </div>
+                <a href="/index" class="back-btn">Retour</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            // Validation basique (à remplacer par votre logique d'authentification)
+            if(email === 'admin@123' && password === 'admin123') {
+                window.location.href = '/src/Admin/Dashboard';
+            } else {
+                alert('Identifiants incorrects. Essayez admin@esi.dz / admin123');
+            }
+        });
+    </script>
+</body>
+</html>

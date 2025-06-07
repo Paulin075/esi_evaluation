@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de bord Enseignant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/Dashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <span class="material-icons">account_circle</span>
+        <h2>Espace Enseignant</h2>
+        <nav>
+            <a href="#" class="active" id="nav-dashboard">
+                <span class="material-icons" style="vertical-align:middle;">dashboard</span> Tableau de bord
+            </a>
+            <a href="#" id="nav-stats">
+                <span class="material-icons" style="vertical-align:middle;">bar_chart</span> Statistiques
+            </a>
+            <a href="#" id="nav-classement">
+                <span class="material-icons" style="vertical-align:middle;">star</span> Classements
+            </a>
+        </nav>
+    </div>
+    <div class="main-content">
+        <!-- Section Dashboard -->
+        <div id="section-dashboard">
+            <div class="dashboard-header">
+                <div>
+                    <div class="dashboard-title">Bienvenue, <span id="teacher-name">Enseignant</span></div>
+                    <div class="dashboard-subtitle">
+                        Retrouvez vos scores, classements et les retours sur vos enseignements.
+                    </div>
+                </div>
+                <button class="btn-retour" onclick="window.location.href='../../index.html'">
+                    <span class="material-icons">arrow_back</span>
+                    Retour à l'accueil
+                </button>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span class="material-icons stat-icon clarte">emoji_objects</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Score Clarté</span>
+                        <span class="stat-value" id="score-clarte">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon explication">school</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Score Explication</span>
+                        <span class="stat-value" id="score-explication">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon comportement">groups</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Score Comportement</span>
+                        <span class="stat-value" id="score-comportement">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="material-icons stat-icon star">star</span>
+                    <div class="stat-info">
+                        <span class="stat-label">Classement Année</span>
+                        <span class="stat-value" id="classement-annee">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Statistiques -->
+        <div id="section-stats" style="display:none;">
+            <div class="chart-card">
+                <h3>Statistiques générales</h3>
+                <canvas id="stats-global-chart" height="120"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Répartition des scores par critère</h3>
+                <canvas id="stats-criteres-chart" height="120"></canvas>
+            </div>
+        </div>
+
+        <!-- Section Classement -->
+        <div id="section-classement" style="display:none;">
+            <div class="chart-card">
+                <h3>Classement par clarté</h3>
+                <table class="data-table" id="table-clarte">
+                    <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Matière</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="chart-card">
+                <h3 style="color:#1976d2;">Commentaires récents</h3>
+                <table class="data-table" id="table-comments">
+                    <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Commentaire</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../../esi_evaluations_backend/src/services/dashboard.js">
+
+    </script>
+</body>
+</html>

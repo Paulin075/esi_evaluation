@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESI - Évaluation des Enseignants</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="header">
+        <!-- Remplacez par votre logo -->
+        <img src="img/Logo.jpeg" alt="ESI Logo" class="logo">
+        <h1>Système d'Évaluation des Enseignants</h1>
+        <p class="subtitle">Contribuez à l'amélioration de la qualité pédagogique en partageant votre expérience</p>
+    </div>
+
+       <div class="card-container">
+        <div class="card admin" onclick="location.href='/src/Admin/Login'">
+            <span class="material-icons card-icon">admin_panel_settings</span>
+            <h2 class="card-title">Espace Administrateur</h2>
+            <p class="card-desc">Accédez aux tableaux de bord analytiques, gérez les critères d'évaluation et consultez les rapports détaillés.</p>
+            <button class="btn btn-primary">Connexion Admin</button>
+        </div>
+    
+        <div class="card student" onclick="location.href='/src/student/evaluation'">
+            <span class="material-icons card-icon">school</span>
+            <h2 class="card-title">Espace Étudiant</h2>
+            <p class="card-desc">Évaluez vos enseignants de manière anonyme et contribuez à l'amélioration continue des enseignements.</p>
+            <button class="btn btn-secondary">Commencer l'évaluation</button>
+        </div>
+    
+        <div class="card teacher" onclick="location.href='/src/teacher/Login_teacher'">
+            <span class="material-icons card-icon">person</span>
+            <h2 class="card-title">Espace Enseignant</h2>
+            <p class="card-desc">
+                Consultez vos résultats d’évaluation, le classement des enseignants, les scores par critère, et découvrez le meilleur enseignant de l’année.
+            </p>
+            <button class="btn btn-tertiary">Accéder à l’espace enseignant</button>
+        </div>
+    </div>
+    <script>
+        // Animation supplémentaire au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+<footer class="footer">
+    <p>&copy; 2025 ESI - Tous droits réservés</p>
+</footer>
+</html>

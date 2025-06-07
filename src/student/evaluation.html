@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évaluation des Enseignements - ESI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/evaluation.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h1 class="form-title">GRILLE D'ÉVALUATION DES ENSEIGNEMENTS</h1>
+            <p class="form-subtitle">École Supérieure des Ingénieurs (ESI)</p>
+        </div>
+
+         <div id="eval-closed-message" style="display:none;color:#e53935;font-weight:bold;text-align:center;margin:2rem 0;">
+                Les évaluations sont actuellement fermées. Merci de revenir plus tard.
+            </div>
+        <form id="evaluationForm">
+                        
+        
+            <div class="form-card">
+                <div class="form-group">
+                    <label for="teacher" class="required">NOM DE L'ENSEIGNANT :</label>
+                        
+                    <select id="teacher" required>
+                        <option value="">-- Sélectionnez l'enseignant  --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="course" class="required">MATIÈRE DISPENSÉE :</label>
+                    <select id="course" required readonly style="pointer-events:none;">
+                        <option value="">-- Sélectionnez une matière --</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="class" class="required">CLASSE :</label>
+                    <select id="class" required>
+                        <option value="">-- Sélectionnez une classe --</option>
+                        
+                    </select>
+                </div>
+                
+                <p style="color: var(--secondary-text); font-size: 14px; margin-top: 24px;">
+                    En tant qu'évaluateur, il vous suffit de mettre une croix dans la case qui correspond à votre jugement.
+                </p>
+            </div>
+            <div class="form-card">
+                <h2 class="section-title">I. INTÉRÊT DE L'ENSEIGNANT POUR SON COURS</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Cherche à donner l'envie d'apprendre</td>
+                            <td><label class="radio-container"><input type="radio" name="interest1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait preuve d'humour</td>
+                            <td><label class="radio-container"><input type="radio" name="interest2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Utilise différents supports pédagogiques</td>
+                            <td><label class="radio-container"><input type="radio" name="interest3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Lit ses notes ou un document écrit</td>
+                            <td><label class="radio-container"><input type="radio" name="interest4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest4" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Suggère des implications pratiques</td>
+                            <td><label class="radio-container"><input type="radio" name="interest5" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest5" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest5" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest5" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Donne son point de vue personnel</td>
+                            <td><label class="radio-container"><input type="radio" name="interest6" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest6" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest6" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest6" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait preuve de conviction dans son cours</td>
+                            <td><label class="radio-container"><input type="radio" name="interest7" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest7" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest7" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest7" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Montre de l'intérêt et de l'enthousiasme</td>
+                            <td><label class="radio-container"><input type="radio" name="interest8" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest8" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest8" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="interest8" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section II: Clarté du cours -->
+            <div class="form-card">
+                <h2 class="section-title">II. CLARTÉ DU COURS</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Utilise un débit de parole approprié</td>
+                            <td><label class="radio-container"><input type="radio" name="clarity1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Parle d'une voix non monotone</td>
+                            <td><label class="radio-container"><input type="radio" name="clarity2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">S'exprime clairement</td>
+                            <td><label class="radio-container"><input type="radio" name="clarity3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Avance dans son cours à une vitesse mesurée</td>
+                            <td><label class="radio-container"><input type="radio" name="clarity4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="clarity4" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section III: Relations avec les apprenants -->
+            <div class="form-card">
+                <h2 class="section-title">III. RELATIONS AVEC LES APPRENANTS</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Montre de l'intérêt pour les apprenants</td>
+                            <td><label class="radio-container"><input type="radio" name="relation1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Accepte les points de vue divergents</td>
+                            <td><label class="radio-container"><input type="radio" name="relation2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Apporte de l'aide en cas d'incompréhension</td>
+                            <td><label class="radio-container"><input type="radio" name="relation3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Montre du respect envers les apprenants</td>
+                            <td><label class="radio-container"><input type="radio" name="relation4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation4" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Est d'un contact facile (est disponible)</td>
+                            <td><label class="radio-container"><input type="radio" name="relation5" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation5" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation5" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation5" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Maintien de la discipline dans la classe</td>
+                            <td><label class="radio-container"><input type="radio" name="relation6" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation6" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation6" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation6" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Tolère les retards aux cours</td>
+                            <td><label class="radio-container"><input type="radio" name="relation7" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation7" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation7" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation7" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Sanctionne les absences non justifiées au cours précédent</td>
+                            <td><label class="radio-container"><input type="radio" name="relation8" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation8" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation8" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="relation8" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section IV: Organisation du cours -->
+            <div class="form-card">
+                <h2 class="section-title">IV. ORGANISATION DU COURS</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Présente les objectifs du cours à atteindre</td>
+                            <td><label class="radio-container"><input type="radio" name="organization1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Dispense le cours de manière organisée</td>
+                            <td><label class="radio-container"><input type="radio" name="organization2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Donne des documents de travail</td>
+                            <td><label class="radio-container"><input type="radio" name="organization3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait des transitions logiques entre les compétences à acquérir</td>
+                            <td><label class="radio-container"><input type="radio" name="organization4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization4" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait des synthèses utiles lors de son cours</td>
+                            <td><label class="radio-container"><input type="radio" name="organization5" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization5" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization5" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization5" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait preuve de rigueur dans ses horaires de cours (du début et de la fin)</td>
+                            <td><label class="radio-container"><input type="radio" name="organization6" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization6" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization6" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="organization6" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section V: Incitation à la participation -->
+            <div class="form-card">
+                <h2 class="section-title">V. INCITATION À LA PARTICIPATION</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Encourage les questions et les commentaires</td>
+                            <td><label class="radio-container"><input type="radio" name="participation1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Interroge individuellement les apprenants</td>
+                            <td><label class="radio-container"><input type="radio" name="participation2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Pose des questions à la classe entière</td>
+                            <td><label class="radio-container"><input type="radio" name="participation3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Incite les apprenants à interagir</td>
+                            <td><label class="radio-container"><input type="radio" name="participation4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation4" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Pose des questions complexes</td>
+                            <td><label class="radio-container"><input type="radio" name="participation5" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation5" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation5" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation5" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Crée dans la classe une ambiance à la fois animée et ordonnée</td>
+                            <td><label class="radio-container"><input type="radio" name="participation6" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation6" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation6" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation6" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Maintien en éveil de l'attention des apprenants</td>
+                            <td><label class="radio-container"><input type="radio" name="participation7" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation7" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation7" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="participation7" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section VI: Explications -->
+            <div class="form-card">
+                <h2 class="section-title">VI. EXPLICATIONS</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">L'enseignant(e)...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Utilise des explications</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Répète ce qui est difficile</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Souligne les points centraux</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Donne des détails</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation4" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Identifie les points clés</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation5" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation5" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation5" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation5" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Donne des travaux de maison pour la compréhension du cours</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation6" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation6" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation6" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation6" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Fait des corrections ponctuelles des devoirs et travaux rendus par les apprenants</td>
+                            <td><label class="radio-container"><input type="radio" name="explanation7" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation7" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation7" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="explanation7" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section VII: Attitude des apprenants -->
+            <div class="form-card">
+                <h2 class="section-title">VII. ATTITUDE DES APPRENANTS (AUTO-PERCEPTION)</h2>
+                
+                <table class="evaluation-grid">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">Les apprenants...</th>
+                            <th>Toujours<br>(20 pts)</th>
+                            <th>Souvent<br>(10 pts)</th>
+                            <th>Rarement<br>(5 pts)</th>
+                            <th>Jamais<br>(0 pts)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria-name">Sont attentifs et appliqués</td>
+                            <td><label class="radio-container"><input type="radio" name="attitude1" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude1" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude1" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude1" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Participent activement aux cours</td>
+                            <td><label class="radio-container"><input type="radio" name="attitude2" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude2" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude2" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude2" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Respectent l'enseignant(e)</td>
+                            <td><label class="radio-container"><input type="radio" name="attitude3" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude3" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude3" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude3" value="0"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="criteria-name">Sont motivés par le cours</td>
+                            <td><label class="radio-container"><input type="radio" name="attitude4" value="20"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude4" value="10"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude4" value="5"></label></td>
+                            <td><label class="radio-container"><input type="radio" name="attitude4" value="0"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Section VIII: Commentaires -->
+            <div class="form-card">
+                <h2 class="section-title">VIII. AUTRES COMMENTAIRES</h2>
+                <div class="form-group">
+                    <textarea id="comments" placeholder="Vos commentaires supplémentaires..."></textarea>
+                </div>
+            </div>
+            
+                <button type="submit" class="submit-btn">ENVOYER L'ÉVALUATION</button>
+               
+
+        </form>
+        
+         <button type="button" class="submit-btn" onclick="location.href='/index'">Retour</button>
+        <div class="footer">
+            <p>École Supérieure des Ingénieurs (ESI) - Système d'évaluation des enseignements</p>
+        </div>
+    </div>
+    
+<script type="module" src="/esi_evaluations_backend/src/services/evaluation.js">
+
+</script>
+    
+</body>
+
+</html>

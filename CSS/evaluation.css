@@ -1,0 +1,259 @@
+:root {
+            --primary-color: #673AB7;
+            --primary-light: #EDE7F6;
+            --border-color: #DADCE0;
+            --text-color: #202124;
+            --secondary-text: #5F6368;
+            --required-color: #D93025;
+            --background: #F8F9FA;
+            --hover-color: #F1F3F4;
+            --focus-color: #E8F0FE;
+            --header-bg: #F1F3F4;
+        }
+        
+        body {
+            font-family: 'Google Sans', 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+        
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+        }
+
+        #evaluationForm { display: block ; }
+
+        .form-header {
+            background-color: var(--header-bg);
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .form-title {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin: 0 0 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .form-subtitle {
+            font-size: 16px;
+            color: var(--secondary-text);
+            margin-bottom: 24px;
+        }
+        
+        .form-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin: 0 0 24px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+        
+        .required::after {
+            content: "*";
+            color: var(--required-color);
+            margin-left: 4px;
+            font-size: 14px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235F6368'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--focus-color);
+        }
+        
+        .evaluation-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+        
+        .evaluation-grid th {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: 500;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .evaluation-grid td {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .criteria-name {
+            text-align: left;
+            font-weight: 500;
+            font-size: 14px;
+            width: 40%;
+        }
+        
+        .radio-container {
+            display: inline-block;
+            position: relative;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .radio-container:hover {
+            background-color: var(--hover-color);
+        }
+        
+        input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            margin: 0;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="radio"]:checked {
+            border-color: var(--primary-color);
+        }
+        
+        input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 24px 0;
+        }
+        
+        .comments-section {
+            margin-top: 32px;
+        }
+        
+        .comments-section label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            min-height: 120px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--focus-color);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto 0;
+            transition: background-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #5E35B1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--secondary-text);
+            font-size: 12px;
+            padding: 16px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 0 16px;
+            }
+            
+            .form-header {
+                padding: 24px 16px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+            
+            .form-card {
+                padding: 24px 16px;
+            }
+            
+            .evaluation-grid {
+                display: block;
+                overflow-x: auto;
+            }
+        }

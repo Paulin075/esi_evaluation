@@ -1,0 +1,157 @@
+/* Fond général avec dégradé bleu à gauche */
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(120deg, #1e3c72 0%, #2a5298 40%, #f5f6fa 40%, #f5f6fa 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteneur principal en deux colonnes */
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    max-width: 900px;
+    margin: 60px auto 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+    overflow: hidden;
+    min-height: 420px;
+}
+
+/* Colonne gauche : logo et titre */
+.header {
+    background: linear-gradient(120deg, #1e3c72 0%, #2a5298 100%);
+    color: #fff;
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 16px rgba(30,60,114,0.12);
+}
+
+.header h1 {
+    font-size: 2.1rem;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.92;
+}
+
+/* Colonne droite : cartes d'accès */
+.card {
+    background: #fff;
+    flex: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 36px 28px;
+    border-radius: 0 18px 18px 0;
+    box-shadow: none;
+    margin: 0 12px;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.card:not(:last-child) {
+    margin-bottom: 24px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.card-icon {
+    font-size: 2.7rem;
+    color: #2a5298;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 26px;
+    border: none;
+    border-radius: 22px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    margin-top: 8px;
+}
+
+.btn-primary {
+    background: #1e3c72;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #2a5298;
+    color: #fff;
+}
+
+.btn-tertiary {
+    background: #f5f6fa;
+    color: #2a5298;
+    border: 1px solid #2a5298;
+}
+
+.btn:hover {
+    opacity: 0.92;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: #888;
+    font-size: 0.98rem;
+    margin: 24px 0 8px 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .card-container {
+        flex-direction: column;
+        max-width: 98vw;
+        min-height: unset;
+    }
+    .header, .card {
+        border-radius: 18px 18px 0 0;
+        padding: 28px 12px;
+    }
+    .card {
+        border-radius: 0 0 18px 18px;
+    }
+}

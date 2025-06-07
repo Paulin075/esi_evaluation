@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gestion des Évaluations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/CSS/Dasgboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.0/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ESI Admin</h2>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i><span>Tableau de Bord</span></div>
+                <div class="menu-item" data-section="enseignants"><i class="fas fa-chalkboard-teacher"></i><span>Enseignants</span></div>
+                <div class="menu-item" data-section="matieres"><i class="fas fa-book"></i><span>Matières</span></div>
+                <div class="menu-item" data-section="classes"><i class="fas fa-users"></i><span>Classes</span></div>
+                <div class="menu-item" data-section="reponses"><i class="fas fa-edit"></i><span>Réponses</span></div>
+                <div class="menu-item" data-section="statistiques"><i class="fas fa-chart-bar"></i><span>Statistiques</span></div>
+                <div class="menu-item" data-section="parametres"><i class="fas fa-cog"></i><span>Paramètres</span></div>
+                <div class="sidebar-logout">
+                    <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+                </div>
+            </div>
+            <div class="sidebar-toggle-theme">
+                <button id="toggle-theme-btn"><i class="fas fa-moon"></i> Mode Sombre</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Section Tableau de Bord -->
+          <div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon stat-primary"><i class="fas fa-chalkboard-teacher"></i></div>
+        <div class="stat-info">
+            <h3 id="stat-enseignants">0</h3>
+            <p>Enseignants</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-success"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info">
+            <h3 id="stat-evaluations">0</h3>
+            <p>Évaluations</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-warning"><i class="fas fa-star"></i></div>
+        <div class="stat-info">
+            <h3 id="stat-moyenne">0</h3>
+            <p>Moyenne Générale</p>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-danger"><i class="fas fa-percentage"></i></div>
+        <div class="stat-info">
+            <h3 id="stat-taux">0%</h3>
+            <p>Taux de Participation</p>
+        </div>
+    </div>
+    <div class="stat-card">
+    <div class="stat-icon stat-info"><i class="fas fa-calendar-alt"></i></div>
+    <div class="stat-info">
+               <h4 id="periode-eval">Période : --/--/---- au --/--/----</h4>
+    </div>
+</div>
+<div class="stat-card">
+    <div class="stat-icon stat-info"><i class="fas fa-lock"></i></div>
+    <div class="stat-info">
+        <h4 id="statut-eval">Statut : ...</h4>
+    </div>
+</div>
+<div class="stat-card">
+    <div class="stat-icon stat-secondary"><i class="fas fa-user-graduate"></i></div>
+    <div class="stat-info">
+        <h3 id="stat-etudiants">500</h3>
+        <p>Étudiants</p>
+    </div>
+</div>
+<div class="stat-card">
+    <div class="stat-icon stat-info"><i class="fas fa-clock"></i></div>
+    <div class="stat-info">
+        <h4 id="last-eval-date">Dernière évaluation : --/--/----</h4>
+    </div>
+</div>
+</div>
+            <!-- Section Enseignants -->
+           
+            <div class="section-content" id="section-enseignants" style="display:none;">
+                <h1>Enseignants</h1>
+                <button id="add-enseignant-btn" style="margin-bottom:16px;">Ajouter un enseignant</button>
+                <!-- Modal Ajout Enseignant -->
+<div id="modal-add-enseignant" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <h2>Ajouter un enseignant</h2>
+        <form id="form-add-enseignant">
+            <input type="text" id="nom-enseignant" placeholder="Nom" required>
+            <input type="text" id="prenom-enseignant" placeholder="Prénom" required>
+            <input type="email" id="email-enseignant" placeholder="Email" required>
+            <input type="text" id="status-enseignant" placeholder="Status (ex: actif)" required>
+            <input type="text" id="matiere-enseignant" placeholder="Matière enseignée" required>
+            <button type="submit" id="submit-enseignant-btn">Ajouter</button>
+        </form>
+        <button id="cancel-enseignant-btn" class="modal-cancel-btn">Annuler</button>
+    </div>
+    </div>
+                <table class="data-table">
+                    <thead>
+                       <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Matière</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enseignants-table">
+                        <!-- Rempli dynamiquement -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Section Matières -->
+                    
+            <div class="section-content" id="section-matieres" style="display:none;">
+                    <h1>Matières</h1>
+                    <button id="add-matiere-btn" style="margin-bottom:16px;">Ajouter une matière</button>
+                    <!-- Modal Ajout Matière -->
+                    <div id="modal-add-matiere" class="modal-overlay" style="display:none;">
+                    <div class="modal-content">
+                        <h2>Ajouter une matière</h2>
+                        <form id="form-add-matiere">
+                            <input type="text" id="nom-matiere" placeholder="Nom de la matière" required>
+                            <input type="text" id="code-matiere" placeholder="Code de la matière" required>
+                            <button type="submit" id="submit-matiere-btn">Ajouter</button>
+                        </form>
+                        <button id="cancel-matiere-btn" class="modal-cancel-btn">Annuler</button>
+                    </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matieres-table">
+                            <!-- Rempli dynamiquement -->
+                        </tbody>
+                    </table>
+            </div>
+            <!-- Section Classes -->
+            <div class="section-content" id="section-classes" style="display:none;">
+    <h1>Classes</h1>
+    <button id="add-classe-btn" style="margin-bottom:16px;">Ajouter une classe</button>
+    <!-- Modal Ajout Classe -->
+    <div id="modal-add-classe" class="modal-overlay" style="display:none;">
+      <div class="modal-content">
+        <h2>Ajouter une classe</h2>
+        <form id="form-add-classe">
+            <input type="text" id="nom-classe" placeholder="Nom de la classe" required>
+            <input type="text" id="niveau-classe" placeholder="Niveau" required>
+            <input type="text" id="annee-classe" placeholder="Année scolaire" required>
+            <button type="submit" id="submit-classe-btn">Ajouter</button>
+        </form>
+        <button id="cancel-classe-btn" class="modal-cancel-btn">Annuler</button>
+      </div>
+    </div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Niveau</th>
+                <th>Année scolaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="classes-table">
+            <!-- Rempli dynamiquement -->
+        </tbody>
+    </table>
+</div>
+            <!-- Section Réponses -->
+           <div class="section-content" id="section-reponses" style="display:none;">
+                <h1>Réponses</h1>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Matière</th>
+                            <th>Date</th>
+                            <th>Total des points</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reponses-table">
+                        <!-- Rempli dynamiquement -->
+                    </tbody>
+                </table>
+                <!-- Modal pour afficher les critères -->
+                <div id="modal-criteres" class="modal-overlay" style="display:none;">
+                <div class="modal-content" style="min-width:340px;">
+                    <h2>Détail de l'évaluation</h2>
+                    <div id="criteres-details"></div>
+                    <button id="close-modal-criteres" class="modal-cancel-btn">Fermer</button>
+                </div>
+                </div>
+</div>
+            <!-- Section Statistiques -->
+            <div class="section-content" id="section-statistiques" style="display:none;">
+<h2>Scores par enseignant et matière</h2>
+<table class="data-table" id="stat-score-table">
+    <thead>
+        <tr>
+            <th>Enseignant</th>
+            <th>Matière</th>
+            <th>Score total</th>
+            <th>Commentaire</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rempli dynamiquement -->
+    </tbody>
+</table>
+<h2>Classement des enseignants par clarté</h2>
+<canvas id="graph-clarte" height="120"></canvas>
+
+<h2>Classement des enseignements bien expliqués</h2>
+<canvas id="graph-explication" height="120"></canvas>
+
+<h2>Classement des enseignements selon le comportement des apprenants</h2>
+<canvas id="graph-comportement" height="120"></canvas>
+
+<h2>Meilleur enseignant de l’année</h2>
+<div id="best-teacher"></div>
+<canvas id="stat-score-graph" height="120"></canvas>
+<canvas id="stat-score-graph" height="120"></canvas>
+            </div>
+            <!-- Section Paramètres -->
+            <div class="section-content" id="section-parametres" style="display:none;">
+                <h1>Paramètres</h1>
+                <h2>Contrôle des évaluations</h2>
+                <button id="start-eval-btn" class="param-btn">Débuter les évaluations</button>
+                <button id="stop-eval-btn" class="param-btn">Arrêter les évaluations</button>
+                <div id="eval-status-message"></div>
+                <h2>Paramètres avancés</h2>
+            <!-- Changer le message affiché aux étudiants -->
+            <label for="student-message">Message affiché aux étudiants :</label>
+            <input type="text" id="student-message" style="width:60%;margin-bottom:10px;">
+            <button id="save-message-btn" class="param-btn">Enregistrer le message</button>
+
+            <!-- Définir une période d’évaluation -->
+            <div style="margin:18px 0;">
+                <label>Date de début : <input type="date" id="eval-date-start"></label>
+                <label style="margin-left:16px;">Date de fin : <input type="date" id="eval-date-end"></label>
+                <button id="save-period-btn" class="param-btn">Enregistrer la période</button>
+            </div>
+
+            <!-- Exporter les résultats -->
+            <button id="export-csv-btn" class="param-btn" style="background:#10b981;">Exporter les résultats en CSV</button>
+            <button id="export-pdf-btn" class="param-btn" style="background:#6366f1;">Exporter en PDF</button>
+
+            <!-- Réinitialiser toutes les évaluations -->
+            <button id="reset-evals-btn" class="param-btn" style="background:#ef4444;">Réinitialiser toutes les évaluations</button>
+
+                        </div>
+                    </div>
+                </div>
+
+    <script>
+                // Juste après la connexion à Supabase
+        
+        async function afficherStatutEvaluation() {
+            const { data, error } = await supabase
+                .from('parametres')
+                .select('evaluation_status')
+                .eq('id', 1)
+                .single();
+        
+            if (data && data.evaluation_status) {
+                document.getElementById('statut-eval').innerText =
+                    "Statut : " + (data.evaluation_status === 'open' ? "Ouvertes" : "Fermées");
+                document.getElementById('eval-status-message').innerText =
+                    data.evaluation_status === 'open'
+                        ? "Les évaluations sont ouvertes."
+                        : "Les évaluations sont fermées.";
+            } else {
+                document.getElementById('statut-eval').innerText = "Statut : ...";
+                document.getElementById('eval-status-message').innerText = "";
+            }
+        }
+        
+        // Appelle cette fonction au chargement de la page et après chaque changement de statut
+        document.addEventListener('DOMContentLoaded', afficherStatutEvaluation);
+        document.getElementById('start-eval-btn').onclick = async () => {
+            await setEvaluationStatus('open');
+            afficherStatutEvaluation();
+        };
+        document.getElementById('stop-eval-btn').onclick = async () => {
+            await setEvaluationStatus('closed');
+            afficherStatutEvaluation();
+        };
+    // Navigation sidebar
+    document.querySelectorAll('.sidebar-menu .menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+            // Active menu
+            document.querySelectorAll('.sidebar-menu .menu-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+            // Affiche la bonne section
+            const section = this.getAttribute('data-section');
+            document.querySelectorAll('.main-content .section-content').forEach(sec => sec.style.display = 'none');
+            document.getElementById('section-' + section).style.display = 'block';
+        });
+    });
+    // Déconnexion
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        window.location.href = '/login.html';
+    });
+    </script>
+    <script>
+        const themeBtn = document.getElementById('toggle-theme-btn');
+        const body = document.body;
+
+        // Appliquer le thème sauvegardé
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+        }
+
+        // Bascule thème
+        themeBtn.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i> Mode Clair';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i> Mode Sombre';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+</script>
+<script src="/esi_evaluations_backend/src/services/enseignant.js"></script>
+<script type="module">
+// Connexion Supabase
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+const supabaseUrl = 'https://pbappvyoenuorjnyxtnp.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBiYXBwdnlvZW51b3Jqbnl4dG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc0MzU4MzcsImV4cCI6MjA2MzAxMTgzN30.CLryZZiKvIdb4ExIUaYqgq5TuVa3y8Nxwgx8yu0mlZk'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Charger enseignants + matière
+async function loadEnseignants() {
+    const { data, error } = await supabase
+        .from('enseignants')
+        .select('id, nom, prenom, email, status, enseignant_matiere(matieres(nom))')
+    const tbody = document.getElementById('enseignants-table')
+    if (error) {
+        tbody.innerHTML = `<tr><td colspan="6">Erreur de chargement</td></tr>`
+        return
+    }
+    tbody.innerHTML = data.map(e => `
+        <tr>
+            <td>${e.nom}</td>
+            <td>${e.prenom}</td>
+            <td>${e.email}</td>
+            <td>${e.status}</td>
+            <td>
+                ${e.enseignant_matiere && e.enseignant_matiere.length > 0
+                    ? e.enseignant_matiere.map(em => em.matieres?.nom).filter(Boolean).join(', ')
+                    : '<em>Aucune</em>'}
+            </td>
+            <td>
+                <button class="delete-enseignant-btn" data-id="${e.id}">Supprimer</button>
+            </td>
+        </tr>
+    `).join('')
+    // Suppression
+    document.querySelectorAll('.delete-enseignant-btn').forEach(btn => {
+        btn.onclick = async () => {
+            if(confirm("Supprimer cet enseignant ?")) {
+                await supabase.from('enseignants').delete().eq('id', btn.dataset.id)
+                loadEnseignants()
+            }
+        }
+    })
+}
+// Gestion du modal d'ajout
+const addBtn = document.getElementById('add-enseignant-btn');
+const modal = document.getElementById('modal-add-enseignant');
+const cancelBtn = document.getElementById('cancel-enseignant-btn');
+const form = document.getElementById('form-add-enseignant');
+
+addBtn.onclick = () => {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+cancelBtn.onclick = () => {
+    modal.style.display = 'none';
+    form.reset();
+    document.body.style.overflow = '';
+};
+
+form.onsubmit = async (e) => {
+    e.preventDefault();
+    const nom = document.getElementById('nom-enseignant').value.trim();
+    const prenom = document.getElementById('prenom-enseignant').value.trim();
+    const email = document.getElementById('email-enseignant').value.trim();
+    const status = document.getElementById('status-enseignant').value.trim();
+    const matiere = document.getElementById('matiere-enseignant').value.trim();
+    if (!nom || !prenom || !email || !status || !matiere) return;
+
+    // Ajout enseignant
+    const { data, error } = await supabase.from('enseignants').insert([{ nom, prenom, email, status }]).select().single();
+    if (error) {
+        alert("Erreur lors de l'ajout");
+        return;
+    }
+    // Associer une matière
+    const { data: matieres } = await supabase.from('matieres').select('id').eq('nom', matiere).single();
+    if (matieres && matieres.id) {
+        await supabase.from('enseignant_matiere').insert([{ enseignant_id: data.id, matiere_id: matieres.id }]);
+    }
+    form.reset();
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    loadEnseignants();
+};
+// Charger à l'ouverture de la section
+document.querySelector('[data-section="enseignants"]').addEventListener('click', loadEnseignants)
+ // Charger les matières
+        async function loadMatieres() {
+            const { data, error } = await supabase.from('matieres').select('*')
+            const tbody = document.getElementById('matieres-table')
+            if (error) {
+                tbody.innerHTML = `<tr><td colspan="3">Erreur de chargement</td></tr>`
+                return
+            }
+            tbody.innerHTML = data.map(m => `
+                <tr>
+                    <td>${m.nom}</td>
+                    <td>${m.code}</td>
+                    <td>
+                        <button class="delete-matiere-btn" data-id="${m.id}">Supprimer</button>
+                    </td>
+                </tr>
+            `).join('')
+            // Suppression
+            document.querySelectorAll('.delete-matiere-btn').forEach(btn => {
+                btn.onclick = async () => {
+                    if(confirm("Supprimer cette matière ?")) {
+                        await supabase.from('matieres').delete().eq('id', btn.dataset.id)
+                        loadMatieres()
+                    }
+                }
+            })
+        }
+
+        // Gestion du modal d'ajout de matière
+        const addMatiereBtn = document.getElementById('add-matiere-btn');
+        const modalMatiere = document.getElementById('modal-add-matiere');
+        const cancelMatiereBtn = document.getElementById('cancel-matiere-btn');
+        const formMatiere = document.getElementById('form-add-matiere');
+
+        addMatiereBtn.onclick = () => {
+            modalMatiere.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        };
+        cancelMatiereBtn.onclick = () => {
+            modalMatiere.style.display = 'none';
+            formMatiere.reset();
+            document.body.style.overflow = '';
+        };
+
+        formMatiere.onsubmit = async (e) => {
+            e.preventDefault();
+            const nom = document.getElementById('nom-matiere').value.trim();
+            const code = document.getElementById('code-matiere').value.trim();
+            if (!nom || !code) return;
+            const { error } = await supabase.from('matieres').insert([{ nom, code }]);
+            if (error) {
+                alert("Erreur lors de l'ajout : " + error.message);
+                return;
+            }
+            formMatiere.reset();
+            modalMatiere.style.display = 'none';
+            document.body.style.overflow = '';
+            loadMatieres();
+        };
+
+        // Charger à l'ouverture de la section
+        document.querySelector('[data-section="matieres"]').addEventListener('click', loadMatieres)
+        // Charger les classes
+async function loadClasses() {
+    const { data, error } = await supabase.from('classes').select('*')
+    const tbody = document.getElementById('classes-table')
+    if (error) {
+        tbody.innerHTML = `<tr><td colspan="4">Erreur de chargement</td></tr>`
+        return
+    }
+    tbody.innerHTML = data.map(c => `
+        <tr>
+            <td>${c.nom}</td>
+            <td>${c.niveau}</td>
+            <td>${c.annee_scolaire}</td>
+            <td>
+                <button class="delete-classe-btn" data-id="${c.id}">Supprimer</button>
+            </td>
+        </tr>
+    `).join('')
+    // Suppression
+    document.querySelectorAll('.delete-classe-btn').forEach(btn => {
+        btn.onclick = async () => {
+            if(confirm("Supprimer cette classe ?")) {
+                await supabase.from('classes').delete().eq('id', btn.dataset.id)
+                loadClasses()
+            }
+        }
+    })
+}
+
+// Gestion du modal d'ajout de classe
+const addClasseBtn = document.getElementById('add-classe-btn');
+const modalClasse = document.getElementById('modal-add-classe');
+const cancelClasseBtn = document.getElementById('cancel-classe-btn');
+const formClasse = document.getElementById('form-add-classe');
+
+addClasseBtn.onclick = () => {
+    modalClasse.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
+cancelClasseBtn.onclick = () => {
+    modalClasse.style.display = 'none';
+    formClasse.reset();
+    document.body.style.overflow = '';
+};
+
+formClasse.onsubmit = async (e) => {
+    e.preventDefault();
+    const nom = document.getElementById('nom-classe').value.trim();
+    const niveau = document.getElementById('niveau-classe').value.trim();
+    const annee = document.getElementById('annee-classe').value.trim();
+    if (!nom || !niveau || !annee) return;
+    const { error } = await supabase.from('classes').insert([{ nom, niveau, annee_scolaire: annee }]);
+    if (error) {
+        alert("Erreur lors de l'ajout : " + error.message);
+        return;
+    }
+    formClasse.reset();
+    modalClasse.style.display = 'none';
+    document.body.style.overflow = '';
+    loadClasses();
+};
+
+// Charger à l'ouverture de la section
+document.querySelector('[data-section="classes"]').addEventListener('click', loadClasses)
+
+// Charger les réponses d'évaluations par enseignant, matière, critère et note
+async function loadReponses() {
+    // Récupère toutes les réponses avec jointures
+    const { data, error } = await supabase
+        .from('reponses')
+        .select(`
+            id,
+            points,
+            evaluation_id,
+            criteres (description),
+            evaluations (
+                id,
+                date_evaluation,
+                enseignant_id,
+                enseignants (nom, prenom),
+                session_id,
+                sessions_evaluation (
+                    matiere_id,
+                    matieres (nom)
+                )
+            )
+        `);
+
+    const tbody = document.getElementById('reponses-table');
+    if (error) {
+        tbody.innerHTML = `<tr><td colspan="5">Erreur de chargement</td></tr>`;
+        return;
+    }
+
+    // Grouper par evaluation_id
+    const grouped = {};
+    data.forEach(r => {
+        const evalId = r.evaluation_id;
+        if (!grouped[evalId]) grouped[evalId] = { criteres: [], total: 0, info: r.evaluations };
+        grouped[evalId].criteres.push({ description: r.criteres?.description, points: r.points });
+        grouped[evalId].total += r.points;
+    });
+
+    tbody.innerHTML = Object.entries(grouped).map(([evalId, val]) => {
+        const info = val.info;
+        return `
+            <tr>
+                <td>${info?.enseignants ? info.enseignants.nom + ' ' + info.enseignants.prenom : '-'}</td>
+                <td>${info?.sessions_evaluation?.matieres ? info.sessions_evaluation.matieres.nom : '-'}</td>
+                <td>${info?.date_evaluation ? new Date(info.date_evaluation).toLocaleDateString() : '-'}</td>
+                <td>${val.total}</td>
+                <td><button class="show-criteres-btn" data-evalid="${evalId}">Afficher</button></td>
+            </tr>
+        `;
+    }).join('');
+
+    // Gestion du modal d'affichage des critères
+    document.querySelectorAll('.show-criteres-btn').forEach(btn => {
+        btn.onclick = () => {
+            const evalId = btn.dataset.evalid;
+            const criteres = grouped[evalId].criteres;
+           document.getElementById('criteres-details').innerHTML = `
+    <table class="criteres-table">
+        <thead>
+            <tr>
+                ${criteres.map(c => `<th>${c.description}</th>`).join('')}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                ${criteres.map(c => `<td>${c.points}</td>`).join('')}
+            </tr>
+        </tbody>
+    </table>
+`;
+            document.getElementById('modal-criteres').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    });
+    document.getElementById('close-modal-criteres').onclick = () => {
+        document.getElementById('modal-criteres').style.display = 'none';
+        document.body.style.overflow = '';
+    };
+}document.querySelector('[data-section="reponses"]').addEventListener('click', loadReponses)
+
+// Affiche le score total par enseignant, matière et critère
+async function loadStatScores() {
+    const { data, error } = await supabase
+        .from('evaluations')
+        .select(`
+            id,
+            enseignant_id,
+            commentaires,
+            enseignants (nom, prenom),
+            session_id,
+            sessions_evaluation (
+                matiere_id,
+                matieres (nom)
+            ),
+            reponses (points)
+        `);
+
+    if (error) return;
+
+    // Agrégation par enseignant + matière
+    const stats = {};
+    data.forEach(ev => {
+        const enseignant = ev.enseignants ? ev.enseignants.nom + ' ' + ev.enseignants.prenom : '-';
+        const matiere = ev.sessions_evaluation?.matieres ? ev.sessions_evaluation.matieres.nom : '-';
+        const commentaire = ev.commentaires || '-';
+        const total = ev.reponses && ev.reponses.length > 0
+            ? ev.reponses.reduce((sum, r) => sum + (r.points || 0), 0)
+            : 0;
+        const key = `${enseignant}|${matiere}|${commentaire}`;
+        stats[key] = { enseignant, matiere, total, commentaire };
+    });
+
+    // Remplir le tableau
+    const tbody = document.getElementById('stat-score-table').querySelector('tbody');
+    tbody.innerHTML = Object.values(stats).map(s => `
+        <tr>
+            <td>${s.enseignant}</td>
+            <td>${s.matiere}</td>
+            <td>${s.total}</td>
+            <td>${s.commentaire}</td>
+        </tr>
+    `).join('');
+}
+document.querySelector('[data-section="statistiques"]').addEventListener('click', loadStatScores);
+// Helper pour détruire un graphe Chart.js existant
+function destroyChart(id) {
+    if (window[id]) window[id].destroy();
+}
+
+// 1. Graphe classement par clarté
+async function graphClarte() {
+    const { data } = await supabase
+        .from('reponses')
+        .select(`
+            points,
+            criteres (description),
+            evaluations (
+                enseignants (nom, prenom)
+            )
+        `);
+    // Filtre les critères liés à la clarté
+    const stats = {};
+    data.forEach(r => {
+        if (r.criteres?.description && r.criteres.description.toLowerCase().includes('claire')) {
+            const enseignant = r.evaluations?.enseignants ? r.evaluations.enseignants.nom + ' ' + r.evaluations.enseignants.prenom : '-';
+            if (!stats[enseignant]) stats[enseignant] = 0;
+            stats[enseignant] += r.points;
+        }
+    });
+    const ctx = document.getElementById('graph-clarte').getContext('2d');
+    destroyChart('clarteChart');
+    window.clarteChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(stats),
+            datasets: [{
+                label: 'Score clarté',
+                data: Object.values(stats),
+                backgroundColor: '#6366f1'
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { ticks: { autoSkip: false } } }
+        }
+    });
+}
+
+// 2. Graphe enseignements bien expliqués
+async function graphExplication() {
+    const { data } = await supabase
+        .from('reponses')
+        .select(`
+            points,
+            criteres (description),
+            evaluations (
+                enseignants (nom, prenom)
+            )
+        `);
+    // Filtre les critères liés à l'explication
+    const stats = {};
+    data.forEach(r => {
+        if (r.criteres?.description && (
+            r.criteres.description.toLowerCase().includes('explique') ||
+            r.criteres.description.toLowerCase().includes('explication') ||
+            r.criteres.description.toLowerCase().includes('structure')
+        )) {
+            const enseignant = r.evaluations?.enseignants ? r.evaluations.enseignants.nom + ' ' + r.evaluations.enseignants.prenom : '-';
+            if (!stats[enseignant]) stats[enseignant] = 0;
+            stats[enseignant] += r.points;
+        }
+    });
+    const ctx = document.getElementById('graph-explication').getContext('2d');
+    destroyChart('explicationChart');
+    window.explicationChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(stats),
+            datasets: [{
+                label: 'Score explication',
+                data: Object.values(stats),
+                backgroundColor: '#10b981'
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { ticks: { autoSkip: false } } }
+        }
+    });
+}
+
+// 3. Graphe classement comportement des apprenants
+async function graphComportement() {
+    const { data } = await supabase
+        .from('reponses')
+        .select(`
+            points,
+            criteres (description),
+            evaluations (
+                enseignants (nom, prenom)
+            )
+        `);
+    // Filtre les critères liés au comportement
+    const stats = {};
+    data.forEach(r => {
+        if (r.criteres?.description && (
+            r.criteres.description.toLowerCase().includes('comportement') ||
+            r.criteres.description.toLowerCase().includes('participation') ||
+            r.criteres.description.toLowerCase().includes('apprenant')
+        )) {
+            const enseignant = r.evaluations?.enseignants ? r.evaluations.enseignants.nom + ' ' + r.evaluations.enseignants.prenom : '-';
+            if (!stats[enseignant]) stats[enseignant] = 0;
+            stats[enseignant] += r.points;
+        }
+    });
+    const ctx = document.getElementById('graph-comportement').getContext('2d');
+    destroyChart('comportementChart');
+    window.comportementChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(stats),
+            datasets: [{
+                label: 'Score comportement',
+                data: Object.values(stats),
+                backgroundColor: '#f59e42'
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: { x: { ticks: { autoSkip: false } } }
+        }
+    });
+}
+
+// 4. Meilleur enseignant de l’année (tous critères confondus)
+async function bestTeacher() {
+    const { data } = await supabase
+        .from('reponses')
+        .select(`
+            points,
+            evaluations (
+                enseignants (nom, prenom)
+            )
+        `);
+    const totals = {};
+    data.forEach(r => {
+        const enseignant = r.evaluations?.enseignants ? r.evaluations.enseignants.nom + ' ' + r.evaluations.enseignants.prenom : '-';
+        if (!totals[enseignant]) totals[enseignant] = 0;
+        totals[enseignant] += r.points;
+    });
+    // Classement décroissant
+    const sorted = Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+    document.getElementById('best-teacher').innerHTML = sorted.length
+        ? `<b>${sorted[0][0]}</b> avec <b>${sorted[0][1]}</b> points`
+        : 'Aucun résultat';
+}
+
+// Appel tout lors de l'ouverture de la section Statistiques
+document.querySelector('[data-section="statistiques"]').addEventListener('click', () => {
+    graphClarte();
+    graphExplication();
+    graphComportement();
+    bestTeacher();
+});
+// Met à jour le statut dans Supabase
+async function setEvaluationStatus(status) {
+    await supabase.from('parametres').update({ evaluation_status: status }).eq('id', 1);
+    document.getElementById('eval-status-message').innerText =
+        status === 'open'
+        ? "Les évaluations sont ouvertes."
+        : "Les évaluations sont fermées.";
+}
+document.getElementById('start-eval-btn').onclick = () => setEvaluationStatus('open');
+document.getElementById('stop-eval-btn').onclick = () => setEvaluationStatus('closed');
+document.getElementById('export-csv-btn').onclick = async () => {
+    // Récupère toutes les évaluations avec jointures
+    const { data, error } = await supabase
+        .from('evaluations')
+        .select(`
+            id,
+            commentaires,
+            enseignants (nom, prenom),
+            sessions_evaluation (
+                matieres (nom)
+            ),
+            reponses (
+                points,
+                criteres (description)
+            )
+        `);
+
+    if (!data || error) return alert("Erreur lors de l'export.");
+
+    // Prépare l'entête
+    const criteresSet = new Set();
+    data.forEach(ev => {
+        ev.reponses.forEach(r => criteresSet.add(r.criteres?.description));
+    });
+    const criteres = Array.from(criteresSet);
+
+    const header = [
+        "Enseignant",
+        "Matière",
+        ...criteres,
+        "Commentaire"
+    ];
+
+    // Prépare les lignes
+    const rows = data.map(ev => {
+        const enseignant = ev.enseignants ? `${ev.enseignants.nom} ${ev.enseignants.prenom}` : '';
+        const matiere = ev.sessions_evaluation?.matieres?.nom || '';
+        const critScores = criteres.map(c =>
+            (ev.reponses.find(r => r.criteres?.description === c)?.points) ?? ''
+        );
+        const commentaire = ev.commentaires || '';
+        return [enseignant, matiere, ...critScores, commentaire];
+    });
+
+    // Génère le CSV
+    const csv = [
+        header.join(','),
+        ...rows.map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))
+    ].join('\n');
+
+    // Télécharge le fichier
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'evaluations_complet.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+};
+
+document.getElementById('export-pdf-btn').onclick = async () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Titre
+    doc.setFontSize(16);
+    doc.text("Rapport des évaluations", 14, 15);
+
+    // Statistiques globales (exemple)
+    const enseignants = document.getElementById('stat-enseignants').textContent;
+    const evals = document.getElementById('stat-evaluations').textContent;
+    const moyenne = document.getElementById('stat-moyenne').textContent;
+    const taux = document.getElementById('stat-taux').textContent;
+    const periode = document.getElementById('periode-eval').textContent;
+    const statut = document.getElementById('statut-eval').textContent;
+
+    doc.setFontSize(11);
+    doc.text(`Enseignants : ${enseignants}`, 14, 25);
+    doc.text(`Évaluations : ${evals}`, 14, 32);
+    doc.text(`Moyenne générale : ${moyenne}`, 14, 39);
+    doc.text(`Taux de participation : ${taux}`, 14, 46);
+    doc.text(periode, 14, 53);
+    doc.text(statut, 14, 60);
+
+    // Table des évaluations
+    const { data } = await supabase
+        .from('evaluations')
+        .select(`
+            enseignants (nom, prenom),
+            sessions_evaluation (matieres (nom)),
+            reponses (points, criteres (description)),
+            commentaires
+        `);
+
+    // Prépare l'entête
+    const criteresSet = new Set();
+    data.forEach(ev => {
+        ev.reponses.forEach(r => criteresSet.add(r.criteres?.description));
+    });
+    const criteres = Array.from(criteresSet);
+
+    const header = [
+        "Enseignant",
+        "Matière",
+        ...criteres,
+        "Commentaire"
+    ];
+
+    // Prépare les lignes
+    const rows = data.map(ev => {
+        const enseignant = ev.enseignants ? `${ev.enseignants.nom} ${ev.enseignants.prenom}` : '';
+        const matiere = ev.sessions_evaluation?.matieres?.nom || '';
+        const critScores = criteres.map(c =>
+            (ev.reponses.find(r => r.criteres?.description === c)?.points) ?? ''
+        );
+        const commentaire = ev.commentaires || '';
+        return [enseignant, matiere, ...critScores, commentaire];
+    });
+
+    // Ajoute la table
+    doc.autoTable({
+        head: [header],
+        body: rows,
+        startY: 70,
+        styles: { fontSize: 8 }
+    });
+
+    doc.save('rapport_evaluations.pdf');
+};
+//Reset toutes les évaluations
+document.getElementById('reset-evals-btn').onclick = async () => {
+    if (!confirm("Voulez-vous vraiment tout réinitialiser ? Cette action est irréversible.")) return;
+
+    // Supprime dans l'ordre pour respecter les clés étrangères
+    await supabase.from('reponses').delete().neq('id', 0);
+    await supabase.from('resultats_enseignants').delete().neq('id', 0);
+    await supabase.from('evaluations').delete().neq('id', 0);
+    await supabase.from('sessions_evaluation').delete().neq('id', 0);
+    await supabase.from('enseignant_matiere').delete().neq('id', 0);
+    await supabase.from('enseignants').delete().neq('id', 0);
+    await supabase.from('matieres').delete().neq('id', 0);
+    await supabase.from('classes').delete().neq('id', 0);
+
+    // Réinitialise les dates et le statut dans parametres
+    await supabase.from('parametres').update({
+        date_debut: null,
+        date_fin: null,
+        evaluation_status: 'closed'
+    }).eq('id', 1);
+
+    alert("Toutes les données ont été réinitialisées !");
+    afficherPeriodeEvaluation();
+    afficherStatutEvaluation();
+    afficherTauxParticipation();
+    loadDashboardStats();
+};
+
+async function loadDashboardStats() {
+    // Nombre d'enseignants
+    const { count: enseignantsCount } = await supabase
+        .from('enseignants')
+        .select('*', { count: 'exact', head: true });
+
+    // Nombre d'évaluations
+    const { count: evalsCount, data: evalsData } = await supabase
+        .from('evaluations')
+        .select('id, date_evaluation', { count: 'exact' });
+
+    // Moyenne générale (sur tous les points de toutes les réponses)
+    const { data: reponses } = await supabase
+        .from('reponses')
+        .select('points');
+
+    let moyenne = 0;
+    if (reponses && reponses.length > 0) {
+        const total = reponses.reduce((sum, r) => sum + (r.points || 0), 0);
+        moyenne = (total / reponses.length).toFixed(2);
+    }
+
+    // Dernière date d'évaluation
+    let lastDate = '--/--/----';
+    if (evalsData && evalsData.length > 0) {
+        const dates = evalsData
+            .map(e => e.date_evaluation)
+            .filter(Boolean)
+            .map(d => new Date(d));
+        if (dates.length > 0) {
+            const maxDate = new Date(Math.max(...dates));
+            lastDate = maxDate.toLocaleDateString();
+        }
+    }
+
+    // Mise à jour du DOM
+    document.getElementById('stat-enseignants').textContent = enseignantsCount ?? 0;
+    document.getElementById('stat-evaluations').textContent = evalsCount ?? 0;
+    document.getElementById('stat-moyenne').textContent = moyenne ?? 0;
+    document.getElementById('last-eval-date').textContent = `Dernière évaluation : ${lastDate}`;
+}
+
+// --- 1. Affichage de la période d'évaluation ---
+async function afficherPeriodeEvaluation() {
+    const { data } = await supabase
+        .from('parametres')
+        .select('date_debut, date_fin')
+        .eq('id', 1)
+        .single();
+    const periode = document.getElementById('periode-eval');
+    if (periode && data) {
+        periode.textContent = `Période : ${data.date_debut ? new Date(data.date_debut).toLocaleDateString() : '--/--/----'} au ${data.date_fin ? new Date(data.date_fin).toLocaleDateString() : '--/--/----'}`;
+    }
+}
+
+// --- 2. Enregistrement de la période ---
+document.getElementById('save-period-btn').onclick = async () => {
+    const dateDebut = document.getElementById('eval-date-start').value;
+    const dateFin = document.getElementById('eval-date-end').value;
+    if (!dateDebut || !dateFin) {
+        alert("Veuillez renseigner les deux dates.");
+        return;
+    }
+    await supabase.from('parametres').update({
+        date_debut: dateDebut,
+        date_fin: dateFin
+    }).eq('id', 1);
+    alert("Période enregistrée !");
+    await updateEvaluationStatusAuto();
+    afficherPeriodeEvaluation();
+};
+
+// --- 3. Ouverture/fermeture automatique selon la date ---
+async function updateEvaluationStatusAuto() {
+    const { data } = await supabase
+        .from('parametres')
+        .select('date_debut, date_fin')
+        .eq('id', 1)
+        .single();
+    if (!data) return;
+    const today = new Date();
+    const debut = data.date_debut ? new Date(data.date_debut) : null;
+    const fin = data.date_fin ? new Date(data.date_fin) : null;
+    let newStatus = 'closed';
+    if (debut && fin && today >= debut && today <= fin) {
+        newStatus = 'open';
+    }
+    await supabase.from('parametres').update({ evaluation_status: newStatus }).eq('id', 1);
+    afficherStatutEvaluation();
+}
+
+// --- 4. Affichage du statut d'évaluation ---
+async function afficherStatutEvaluation() {
+    const { data } = await supabase
+        .from('parametres')
+        .select('evaluation_status')
+        .eq('id', 1)
+        .single();
+    const statutEval = document.getElementById('statut-eval');
+    if (statutEval) {
+        if (data && data.evaluation_status === 'open') {
+            statutEval.textContent = "Statut : Ouvertes";
+            statutEval.style.color = "#10b981";
+        } else if (data && data.evaluation_status === 'closed') {
+            statutEval.textContent = "Statut : Fermées";
+            statutEval.style.color = "#e53935";
+        } else {
+            statutEval.textContent = "Statut : Inconnu";
+            statutEval.style.color = "#bdbdbd";
+        }
+    }
+}
+
+// --- 5. Calcul du taux de participation (sur 500 étudiants) ---
+async function afficherTauxParticipation() {
+    // Nombre d'évaluations distinctes (par étudiant)
+    const { count: evalsCount } = await supabase
+        .from('evaluations')
+        .select('id', { count: 'exact' });
+    // Calcul sur 500 étudiants
+    const taux = evalsCount ? Math.min(100, ((evalsCount / 500) * 100).toFixed(1)) : 0;
+    const tauxElem = document.getElementById('stat-taux');
+    if (tauxElem) tauxElem.textContent = `${taux}%`;
+}
+
+// --- 6. Appels au chargement de la page ---
+document.addEventListener('DOMContentLoaded', async () => {
+    await updateEvaluationStatusAuto();
+    afficherPeriodeEvaluation();
+    afficherStatutEvaluation();
+    afficherTauxParticipation();
+    loadDashboardStats(); // <-- AJOUTE CETTE LIGNE
+});
+</script>
+</body>
+</html>

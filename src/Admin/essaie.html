@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord du Projet ESI</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+        }
+
+        .dashboard-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .metric {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .status-green {
+            color: #28a745;
+        }
+
+        .status-red {
+            color: #dc3545;
+        }
+
+        .progress-bar-container {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: #007bff;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .team-member {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tableau de Bord du Projet ESI</h1>
+
+    <div class="dashboard-container">
+        <div class="dashboard-item">
+            <h2>Contexte & Objectifs</h2>
+            <p>Taux de complétion des objectifs : <span class="metric">En cours</span></p>
+            <p>Suivi de l'atteinte des objectifs définis.</p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Fonctionnalités</h2>
+            <ul>
+                <li>Gestion des Utilisateurs: <span class="status-green">OK</span></li>
+                <li>Gestion des Données de Référence: <span class="status-green">OK</span></li>
+                <li>Évaluations: <span class="status-green">OK</span></li>
+                <li>Statistiques & Rapports: <span class="status-red">En développement</span></li>
+                <li>Paramétrage: <span class="status-red">À faire</span></li>
+            </ul>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Modèle de Données</h2>
+            <p>Schéma ERD : <a href="#">Voir le schéma</a></p>
+            <p>Nombre d'entités créées : <span class="metric">6</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Serveur</h2>
+            <p>État des serveurs : <span class="metric status-green">Opérationnel</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Postes Clients</h2>
+            <p>Nombre de postes connectés : <span class="metric">10</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Réseau</h2>
+            <p>État du réseau : <span class="metric status-green">Connecté</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Contraintes Techniques</h2>
+            <ul>
+                <li>Prise en compte des postes existants: <span class="status-green">Fait</span></li>
+                <li>Adaptation à l'environnement physique: <span class="status-green">Fait</span></li>
+                <li>Distance entre les bureaux: <span class="status-green">Fait</span></li>
+                <li>Confidentialité des données: <span class="status-green">En cours</span></li>
+            </ul>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Sécurité</h2>
+            <p>Tentatives d'intrusion bloquées (aujourd'hui) : <span class="metric">3</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Backend</h2>
+            <p>Technologie : <span class="metric">Spring Boot (Java)</span></p>
+            <p>État de l'API : <span class="metric status-green">Opérationnelle</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Frontend</h2>
+            <p>Framework : <span class="metric">React.js</span></p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Sécurité Technique</h2>
+            <ul>
+                <li>HTTPS : <span class="status-green">Activé</span></li>
+                <li>OAuth2 : <span class="status-red">Non implémenté</span></li>
+                <li>Journalisation : <span class="status-green">En cours</span></li>
+            </ul>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Organisation du Projet</h2>
+            <p>Méthodologie : <span class="metric">Agile (sprints de 2 semaines)</span></p>
+            <h3>MVP</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 75%;"></div>
+            </div>
+            <p>Avancement : 75%</p>
+            <h3>Fonctionnalités Avancées</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 30%;"></div>
+            </div>
+            <p>Avancement : 30%</p>
+        </div>
+
+        <div class="dashboard-item">
+            <h2>Équipe</h2>
+            <ul>
+                <li class="team-member">Chef de Projet: John Doe</li>
+                <li class="team-member">Développeur Full-Stack: Jane Smith</li>
+                <li class="team-member">Développeur Full-Stack: Peter Jones</li>
+                <li class="team-member">Designer UX/UI: Alice Brown</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
